@@ -1,0 +1,28 @@
+{
+    "id": "12AE7891",
+    "path": null,
+    "project_path": null,
+    "type": "object_explorer",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1701854654930.0,
+    "source_on_save": false,
+    "relative_order": 5,
+    "properties": {
+        "id": "ea009296d22541f49aeddad5194be679",
+        "name": "lrm",
+        "title": "lrm",
+        "language": "R",
+        "source_window_id": "",
+        "Source": "Source"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 0,
+    "encoding": "",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1701854654930,
+    "read_only": false,
+    "read_only_alternatives": []
+}

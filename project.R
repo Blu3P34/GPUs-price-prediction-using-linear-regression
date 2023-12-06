@@ -306,3 +306,22 @@ hist(residuals, main = "Histogram of Residuals", breaks = 20)
 
 bptest(wls_model)
 
+# testing with NVIDIA GeForce RTX 306, NVIDIA GeForce RTX 3070, 
+# AMD Radeon RX 6700 XT, NVIDIA GeForce GTX 1660 Super, NVIDIA GeForce GT 1030
+new_data <- data.frame(
+  Release_Price <- c(329, 499, 479, 299, 90),
+  Memory <- c(12228, 8192, 12228, 6144, 2048),
+  Memory_Bandwidth <- c(360, 448, 384, 336, 48),
+  Max_Power <- c(170,220, 230, 125, 30),
+  Texture_Rate <- c(192, 328.6, 308.6, 136.8, 24.6),
+  Pixel_Rate <- c(95.5, 127.2, 121.3, 65, 9.8),
+  TMUs <- c(120, 184, 192, 88, 24),
+  ROPs <- c(48, 96, 64, 48, 16),
+  L2_Cache <- c(3072,5120, 4096, 1536, 512),
+  Best_Width <- c(3840, 3840, 3840, 3840, 1920)
+)
+
+prediction <- predict(wls_model, newdata = new_data)
+print(prediction)
+residuals <- new_data$Release_Price - prediction
+print(residuals)

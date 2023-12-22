@@ -11,9 +11,9 @@ summary(data0)
 data0[data0 == "none" | data0 == "" | data0 == "\n- " | data0 == "\nUnknown Release Date " | data0 == "None"] <- NA
 data0[data0 == "Yes"] <- 1
 data0[data0 == "No" ] <- 0
-data1 <- data0[complete.cases(data0),]
-summary(data1)
 
+summary(data0)
+data1 <- data0[complete.cases(data0$Release_Price),]
 # Reformatting Architecture and Name variables
 data1$Architecture <- sub("([A-Za-z]+).*", "\\1", data1$Architecture)
 
@@ -74,162 +74,10 @@ data2 <- data1 %>%
          TMUs, ROPs, L2_Cache, Best_Height, Best_Width, Resolution_W, 
          Resolution_H, DVI_Connection, DisplayPort_Connection, HDMI_Connection, VGA_Connection, Power_Connector, 
          Days_since_RD)
+
+data10 <- data2
+data2 <- data2[complete.cases(data2),]
 summary(data2)
-
-# Visualization, run codes for plots
-
-boxplot(data2$Release_Price, 
-        main = "GPU Price Distribution",
-        xlab = "Price in USD",
-        col = "lightblue",
-        border = "black",
-        horizontal = TRUE)
-hist(data2$Release_Price, 
-     main = "GPU Price Distribution",
-     xlab = "Price in USD",
-     col = "lightblue",
-     border = "black",
-     breaks = 10)  
-
-architecture_count <- unique(data2$Architecture)
-architecture_freq <- table(data2$Architecture)
-pie(architecture_freq, labels = paste(architecture_freq,"\n",architecture_count), main = "Architecture distribution", cex = 0.8)
-
-series_count <- unique(data2$Series)
-series_freq <- table(data2$Series)
-pie(series_freq, labels = paste(series_freq,"\n",series_count), main = "Series distribution", cex = 0.8)
-
-manufacturer_count <- unique(data2$Manufacturer)
-manufacturer_freq <- table(data2$Manufacturer)
-pie(manufacturer_freq, labels = paste(manufacturer_freq,"\n",manufacturer_count), main = "Manufacturer distribution", cex = 0.8)
-
-dedicated_count <- unique(data2$Dedicated)
-dedicated_freq <- table(data2$Dedicated)
-pie(dedicated_freq, labels = paste(dedicated_freq,"\n",dedicated_count), main = "Dedicated distribution", cex = 0.8)
-
-integrated_count <- unique(data2$Integrated)
-integrated_freq <- table(data2$Integrated)
-pie(dedicated_freq, labels = paste(integrated_freq,"\n",integrated_count), main = "Integrated distribution", cex = 0.8)
-
-notebookgpu_count <- unique(data2$Notebook_GPU)
-notebookgpu_freq <- table(data2$Notebook_GPU)
-pie(notebookgpu_freq, labels = paste(notebookgpu_freq,"\n",notebookgpu_count), main = "Notebook GPU distribution", cex = 0.8)
-
-slicrossfire_count <- unique(data2$SLI_Crossfire)
-slicrossfire_freq <- table(data2$SLI_Crossfire)
-pie(slicrossfire_freq, labels = paste(slicrossfire_freq,"\n",slicrossfire_count), main = "SLI Crossfire distribution", cex = 0.8)
-
-plot(data2$Boost_Clock, data2$Release_Price, 
-     main = "Release price distribution \n with respect to boost clock",
-     xlab = "Boost clock", ylab = "Release price", col = "blue", pch = 16)
-
-plot(data2$Core_Speed, data2$Release_Price, 
-     main = "Release price distribution \n with respect to core speed",
-     xlab = "Core speed", ylab = "Release price", col = "blue", pch = 16)
-
-memorytype_count <- unique(data2$Memory_Type)
-memorytype_freq <- table(data2$Memory_Type)
-pie(memorytype_freq, labels = paste(memorytype_freq,"\n",memorytype_count), main = "Memory type distribution", cex = 0.8)
-
-plot(data2$Memory, data2$Release_Price, 
-     main = "Release price distribution \n with respect to memory",
-     xlab = "Memory", ylab = "Release price", col = "blue", pch = 16)
-
-plot(data2$Memory_Speed, data2$Release_Price, 
-     main = "Release price distribution \n with respect to memory speed",
-     xlab = "Memory speed", ylab = "Release price", col = "blue", pch = 16)
-
-plot(data2$Memory_Bandwidth, data2$Release_Price, 
-     main = "Release price distribution \n with respect to memory bandwidth",
-     xlab = "Memory bandwidth", ylab = "Release price", col = "blue", pch = 16)
-
-plot(data2$Memory_Bus, data2$Release_Price, 
-     main = "Release price distribution \n with respect to memory bus",
-     xlab = "Memory bus", ylab = "Release price", col = "blue", pch = 16)
-
-process_count <- unique(data2$Process)
-process_freq <- table(data2$Process)
-pie(process_freq, labels = paste(process_freq,"\n",process_count), main = "Process distribution", cex = 0.8)
-
-plot(data2$Max_Power, data2$Release_Price, 
-     main = "Release price distribution \n with respect to max power",
-     xlab = "Max power", ylab = "Release price", col = "blue", pch = 16)
-
-plot(data2$PSU_Amp, data2$Release_Price, 
-     main = "Release price distribution \n with respect to PSU Amp",
-     xlab = "PSU Amp", ylab = "Release price", col = "blue", pch = 16)
-
-plot(data2$PSU_V, data2$Release_Price, 
-     main = "Release price distribution \n with respect to PSU V",
-     xlab = "PSU V", ylab = "Release price", col = "blue", pch = 16)
-
-shader_count <- unique(data2$Shader)
-shader_freq <- table(data2$Shader)
-pie(shader_freq, labels = paste(shader_freq,"\n",shader_count), main = "Shader distribution", cex = 0.8)
-
-directx_count <- unique(data2$Direct_X)
-directx_freq <- table(data2$Direct_X)
-pie(directx_freq, labels = paste(directx_freq,"\n",directx_count), main = "Direct X distribution", cex = 0.8)
-
-opengl_count <- unique(data2$Open_GL)
-opengl_freq <- table(data2$Open_GL)
-pie(opengl_freq, labels = paste(opengl_freq,"\n",opengl_count), main = "Direct X distribution", cex = 0.8)
-
-plot(data2$Texture_Rate, data2$Release_Price, 
-     main = "Release price distribution \n with respect to texture rate",
-     xlab = "Texture rate", ylab = "Release price", col = "blue", pch = 16)
-
-plot(data2$Pixel_Rate, data2$Release_Price, 
-     main = "Release price distribution \n with respect to pixel rate",
-     xlab = "Pixel rate", ylab = "Release price", col = "blue", pch = 16)
-
-plot(data2$TMUs, data2$Release_Price, 
-     main = "Release price distribution \n with respect to TMUs",
-     xlab = "TMUs", ylab = "Release price", col = "blue", pch = 16)
-
-plot(data2$ROPs, data2$Release_Price, 
-     main = "Release price distribution \n with respect to ROPs",
-     xlab = "ROPs", ylab = "Release price", col = "blue", pch = 16)
-
-plot(data2$L2_Cache, data2$Release_Price, 
-     main = "Release price distribution \n with respect to L2 cache",
-     xlab = "L2 cache", ylab = "Release price", col = "blue", pch = 16)
-
-plot(data2$Best_Width, data2$Release_Price, 
-     main = "Release price distribution \n with respect to best width",
-     xlab = "Best width", ylab = "Release price", col = "blue", pch = 16)
-
-plot(data2$Best_Height, data2$Release_Price, 
-     main = "Release price distribution \n with respect to best height",
-     xlab = "Best height", ylab = "Release price", col = "blue", pch = 16)
-
-plot(data2$Resolution_W, data2$Release_Price, 
-     main = "Release price distribution \n with respect to resolution (width)",
-     xlab = "Resolution (width)", ylab = "Release price", col = "blue", pch = 16)
-
-plot(data2$Resolution_H, data2$Release_Price, 
-     main = "Release price distribution \n with respect to resolution (height)",
-     xlab = "Resolution (height)", ylab = "Release price", col = "blue", pch = 16)
-
-plot(data2$DVI_Connection, data2$Release_Price, 
-     main = "Release price distribution \n with respect to DVI connection",
-     xlab = "DVI connection", ylab = "Release price", col = "blue", pch = 16)
-
-plot(data2$DisplayPort_Connection, data2$Release_Price, 
-     main = "Release price distribution \n with respect to display port connection",
-     xlab = "Display port connection", ylab = "Release price", col = "blue", pch = 16)
-
-plot(data2$HDMI_Connection, data2$Release_Price, 
-     main = "Release price distribution \n with respect to HDMI connection",
-     xlab = "HDMI connection", ylab = "Release price", col = "blue", pch = 16)
-
-powerconnector_count <- unique(data2$Power_Connector)
-powerconnector_freq <- table(data2$Power_Connector)
-pie(powerconnector_freq, labels = paste(powerconnector_freq,"\n",powerconnector_count), main = "Power connector distribution", cex = 0.8)
-
-plot(data2$Days_since_RD, data2$Release_Price, 
-     main = "Release price distribution \n with respect to days since release date",
-     xlab = "Days since release date", ylab = "Release price", col = "blue", pch = 16)
 
 # One hot encoding
 
@@ -274,9 +122,15 @@ data5 <- data4 %>%
          Memory_Bandwidth, Max_Power, Texture_Rate, Pixel_Rate, 
          TMUs, ROPs, L2_Cache, Best_Width)
 
+data10 <- data10 %>%
+  select(Release_Price, Memory, 
+         Memory_Bandwidth, Max_Power, Texture_Rate, Pixel_Rate, 
+         TMUs, ROPs, L2_Cache, Best_Width)
+
+data11 <- data10[complete.cases(data10),]
 ################################################# Descriptive statistics #############################################
 # Linear regression model
-lrm <- lm(data5$Release_Price ~ ., data = data5)
+lrm <- lm(data11$Release_Price ~ ., data = data11)
 print(lrm)
 
 # Independence, normality and homoscedasticity of residuals
@@ -289,22 +143,6 @@ plot(lrm$fitted.values, residuals,
 hist(residuals, main = "Histogram of Residuals")
 
 bptest(lrm)
-
-## weighted least square model 
-wls_model <- lm(Release_Price ~  Memory +
-                  Memory_Bandwidth + Max_Power + Texture_Rate + Pixel_Rate + 
-                  TMUs + ROPs + L2_Cache + Best_Width, data = data5, weights = 1 / residuals(lrm)^2)
-
-# Independence, normality and homoscedasticity of residuals
-residuals <- residuals(wls_model)
-
-plot(wls_model$fitted.values, residuals, 
-     xlab = "Fitted Values", ylab = "Residuals",
-     main = "Residuals vs. Fitted Values Plot")
-
-hist(residuals, main = "Histogram of Residuals", breaks = 20)
-
-bptest(wls_model)
 
 # testing with NVIDIA GeForce RTX 306, NVIDIA GeForce RTX 3070, 
 # AMD Radeon RX 6700 XT, NVIDIA GeForce GTX 1660 Super, NVIDIA GeForce GT 1030
@@ -321,7 +159,67 @@ new_data <- data.frame(
   Best_Width <- c(3840, 3840, 3840, 3840, 1920)
 )
 
-prediction <- predict(wls_model, newdata = new_data)
+prediction <- predict(lrm, newdata = new_data)
 print(prediction)
 residuals <- new_data$Release_Price - prediction
 print(residuals)
+
+# Visualization, run codes for plots
+
+boxplot(data10$Release_Price, 
+        main = "GPU Price Distribution",
+        xlab = "Price in USD",
+        col = "lightblue",
+        border = "black",
+        horizontal = TRUE)
+hist(data10$Release_Price, 
+     main = "GPU Price Distribution",
+     xlab = "Price in USD",
+     col = "lightblue",
+     border = "black",
+     breaks = 10)  
+
+
+plot(data10$Memory, data10$Release_Price, 
+     main = "Release price distribution \n with respect to memory",
+     xlab = "Memory", ylab = "Release price", col = "blue", pch = 16)
+
+plot(data10$Memory_Bandwidth, data10$Release_Price, 
+     main = "Release price distribution \n with respect to memory bandwidth",
+     xlab = "Memory bandwidth", ylab = "Release price", col = "blue", pch = 16)
+
+
+plot(data10$Max_Power, data10$Release_Price, 
+     main = "Release price distribution \n with respect to max power",
+     xlab = "Max power", ylab = "Release price", col = "blue", pch = 16)
+
+plot(data10$Texture_Rate, data10$Release_Price, 
+     main = "Release price distribution \n with respect to texture rate",
+     xlab = "Texture rate", ylab = "Release price", col = "blue", pch = 16)
+
+plot(data10$Pixel_Rate, data10$Release_Price, 
+     main = "Release price distribution \n with respect to pixel rate",
+     xlab = "Pixel rate", ylab = "Release price", col = "blue", pch = 16)
+
+plot(data10$TMUs, data10$Release_Price, 
+     main = "Release price distribution \n with respect to TMUs",
+     xlab = "TMUs", ylab = "Release price", col = "blue", pch = 16)
+
+plot(data10$ROPs, data10$Release_Price, 
+     main = "Release price distribution \n with respect to ROPs",
+     xlab = "ROPs", ylab = "Release price", col = "blue", pch = 16)
+
+plot(data10$L2_Cache, data10$Release_Price, 
+     main = "Release price distribution \n with respect to L2 cache",
+     xlab = "L2 cache", ylab = "Release price", col = "blue", pch = 16)
+
+plot(data10$Best_Width, data10$Release_Price, 
+     main = "Release price distribution \n with respect to best width",
+     xlab = "Best width", ylab = "Release price", col = "blue", pch = 16)
+
+
+
+
+
+
+
